@@ -135,6 +135,14 @@ JNIEXPORT jstring JNICALL Java_weld_WeldJNI_weld_1conf_1get
 JNIEXPORT void JNICALL Java_weld_WeldJNI_weld_1conf_1set
   (JNIEnv *, jclass, jlong, jstring, jstring);
 
+/*
+ * Class:     weld_WeldJNI
+ * Method:    weld_load_library
+ * Signature: (Ljava/lang/String;J)V
+ */
+JNIEXPORT void JNICALL Java_weld_WeldJNI_weld_1load_1library
+  (JNIEnv *, jclass, jstring, jlong);
+
 #ifdef __cplusplus
 }
 #endif

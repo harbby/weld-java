@@ -47,4 +47,6 @@ class WeldJNI {
   static native String weld_conf_get(long handle, String key);
 
   static native void weld_conf_set(long handle, String key, String value);
+
+  static native void weld_load_library(String filename, long error);
 }
