@@ -1,5 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
+apply plugin: 'maven'
 
 version = '0.1.0'
 group = "weld"
@@ -49,7 +50,9 @@ task generateJniHeaders(type:Exec) {
  * LLVM ERROR: Program used external function '_get_runid' which could not be resolved!
  */
 task compileWeld(type:Exec) {
-    commandLine "cargo", "build", "--release"
+    //commandLine "cargo", "build", "--release"
+    workingDir = "src/native/include"
+    commandLine "make"
 }
 
 compileJava {
@@ -62,21 +65,21 @@ compileJava {
 test {
     dependsOn cleanTest
     testLogging.showStandardStreams = true
-    systemProperty 'java.library.path', 'target/release/'
+    systemProperty 'java.library.path', 'src/native/include/'
 }
 
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version)
+                'Implementation-Version': project.version)
     }
     // Make sure we copy the compiled native libary to the correct location in the jar file.
     def platform = org.scijava.nativelib.NativeLibraryUtil.getArchitecture().name().toLowerCase()
-    def libname = org.scijava.nativelib.NativeLibraryUtil.getPlatformLibraryName('weld_java')
+    def libname = System.mapLibraryName('weld_java')
     into('META-INF/lib/' + platform) {
-      from {
-        'target/release/' + libname
-      }
+        from {
+            'src/native/include/' + libname
+        }
     }
     dependsOn compileWeld
 }

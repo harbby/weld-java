@@ -25,6 +25,10 @@ public abstract class WeldManaged implements AutoCloseable {
     this.handle = handle;
   }
 
+  public final long getHandle() {
+    return handle;
+  }
+
   /**
    * Close the weld managed object. Note that this method is idempotent.
    */

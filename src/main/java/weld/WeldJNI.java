@@ -28,7 +28,7 @@ class WeldJNI {
 
   static native long weld_module_compile(String code, long conf, long error);
 
-  static native long weld_module_run(long module, long conf, long input, long error);
+  static native long weld_module_run(long module, long context, long input, long error);
 
   static native void weld_module_free(long module);
 
@@ -41,6 +41,10 @@ class WeldJNI {
   static native String weld_error_message(long handle);
 
   static native long weld_conf_new();
+
+  static native long weld_context_new(long handle);
+
+  static native long weld_context_free(long handle);
 
   static native void weld_conf_free(long handle);
 
