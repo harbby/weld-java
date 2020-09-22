@@ -121,22 +121,6 @@ JNIEXPORT void JNICALL Java_weld_WeldJNI_weld_1conf_1free
 
 /*
  * Class:     weld_WeldJNI
- * Method:    weld_context_new
- * Signature: (J)J
- */
-JNIEXPORT jlong JNICALL Java_weld_WeldJNI_weld_1context_1new
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     weld_WeldJNI
- * Method:    weld_context_free
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_weld_WeldJNI_weld_1context_1free
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     weld_WeldJNI
  * Method:    weld_conf_get
  * Signature: (JLjava/lang/String;)Ljava/lang/String;
  */

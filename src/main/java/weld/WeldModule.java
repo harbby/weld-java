@@ -16,12 +16,12 @@ public class WeldModule extends WeldManaged {
     }
   }
 
-  public WeldValue run(WeldContext context, final WeldValue input, WeldError error) {
+  public WeldValue run(WeldConf conf, final WeldValue input, WeldError error) {
     checkAccess();
     final WeldValue output = new WeldValue(
             WeldJNI.weld_module_run(
                     this.handle,
-                    context.handle,
+                    conf.handle,
                     input.handle,
                     error.handle),
             -1L,
@@ -37,11 +37,10 @@ public class WeldModule extends WeldManaged {
   public WeldValue run(final WeldConf conf, final WeldValue input) {
     checkAccess();
     final WeldError error = new WeldError();
-    final WeldContext context= new WeldContext(conf);
     final WeldValue output = new WeldValue(
       WeldJNI.weld_module_run(
         this.handle,
-        context.handle,
+        conf.handle,
         input.handle,
         error.handle),
         -1L,
@@ -49,7 +48,6 @@ public class WeldModule extends WeldManaged {
     if (error.getCode() != 0) {
       final WeldException e = new WeldException(error);
       error.close();
-      context.close();
       output.close();
       throw e;
     }

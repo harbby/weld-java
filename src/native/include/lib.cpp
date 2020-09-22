@@ -76,12 +76,15 @@ JNIEXPORT jlong JNICALL Java_weld_WeldJNI_weld_1module_1compile
  * Signature: (JJJJ)J
  */
 JNIEXPORT jlong JNICALL Java_weld_WeldJNI_weld_1module_1run
-  (JNIEnv * env, jclass jclass, jlong module, jlong context, jlong arg, jlong err) {
+  (JNIEnv * env, jclass jclass, jlong module, jlong conf, jlong arg, jlong err) {
+    weld_context_t context = weld_context_new((weld_conf_t) conf);
     weld_value_t result = weld_module_run(
     (weld_module_t) module,
-    (weld_context_t) context,
+    context,
     (weld_value_t) arg,
     (weld_error_t) err);
+    //todo: finally free
+    weld_context_free(context);
     return (long) result;
   }
 
@@ -158,27 +161,6 @@ JNIEXPORT jlong JNICALL Java_weld_WeldJNI_weld_1conf_1new
 JNIEXPORT void JNICALL Java_weld_WeldJNI_weld_1conf_1free
   (JNIEnv * env, jclass jclass, jlong p) {
         weld_conf_free((weld_conf_t) p);
-  }
-
-/*
- * Class:     weld_WeldJNI
- * Method:    weld_context_new
- * Signature: (J)J
- */
-JNIEXPORT jlong JNICALL Java_weld_WeldJNI_weld_1context_1new
-  (JNIEnv *, jclass, jlong conf) {
-    weld_context_t context = weld_context_new((weld_conf_t) conf);
-    return (long) context;
-  }
-
-/*
- * Class:     weld_WeldJNI
- * Method:    weld_context_free
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_weld_WeldJNI_weld_1context_1free
-  (JNIEnv * env, jclass jclass, jlong context) {
-    weld_context_free((weld_context_t) context);
   }
 
 /*
